@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Abdelrahman Wael · Flutter Engineer</title>
+<meta name="description" content="Abdelrahman Wael, Flutter engineer in Cairo. Production Flutter apps for iOS and Android, native iOS and Bluetooth BLE, push notifications and store releases.">
+<style>body{margin:0}</style>
+</head>
+<body>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@400;600&display=swap">
+<style>
+/* Layout: a single reading column with a wide hero; case studies as a ruled dossier (spec rows left, narrative right); a live TX/RX log as the signature motif. */
+:root{
+  --bg:#F3F5F4; --surface:#FFFFFF; --ink:#111A1F; --muted:#56636B; --rule:#D5DCDA;
+  --accent:#0A58E0; --accent-soft:#E3ECFC; --tx:#C24A0E; --rx:#0A7A5A; --code-bg:#0F1A22; --code-fg:#D7E3EA;
+  --display:"Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --body:"IBM Plex Sans", "Segoe UI", Roboto, Arial, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --arabic:"IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif;
+  --maxw:1080px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0C1317; --surface:#121C22; --ink:#E8EEF0; --muted:#97A6AE; --rule:#24323A;
+  --accent:#6FA2FF; --accent-soft:#16253E; --tx:#FF9A62; --rx:#4FD1A5; --code-bg:#071015; --code-fg:#CFE0E8; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0C1317; --surface:#121C22; --ink:#E8EEF0; --muted:#97A6AE; --rule:#24323A;
+  --accent:#6FA2FF; --accent-soft:#16253E; --tx:#FF9A62; --rx:#4FD1A5; --code-bg:#071015; --code-fg:#CFE0E8; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.wrap{max-width:var(--maxw);margin:0 auto;padding-inline:20px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;letter-spacing:-0.01em}
+p{margin:0}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+
+/* top bar */
+.top{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:22px;flex-wrap:wrap}
+.mark{font-family:var(--display);font-weight:800;font-size:18px;color:var(--ink);text-decoration:none}
+.top nav{display:flex;gap:18px;flex-wrap:wrap;font-size:14px}
+.top nav a{color:var(--muted);text-decoration:none}
+.top nav a:hover{color:var(--ink)}
+
+/* hero */
+.hero{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:48px;align-items:center;padding-block:40px 64px}
+.hero h1{font-size:clamp(38px,6vw,68px);line-height:1.02;font-weight:800}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.lede{margin-top:22px;font-size:19px;color:var(--muted);max-width:34em}
+.facts{display:flex;flex-wrap:wrap;gap:10px 28px;margin-top:28px;font-variant-numeric:tabular-nums}
+.facts div{display:flex;flex-direction:column}
+.facts b{font-family:var(--display);font-size:28px;font-weight:700}
+.facts span{font-size:13px;color:var(--muted)}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.btn{display:inline-flex;align-items:center;gap:8px;font:600 15px var(--body);padding:12px 18px;border-radius:8px;border:1px solid var(--ink);color:var(--ink);background:transparent;text-decoration:none;cursor:pointer}
+.btn.primary{background:var(--ink);color:var(--bg)}
+.btn:hover{transform:translateY(-1px)}
+
+/* signature: TX/RX log */
+.log{background:var(--code-bg);color:var(--code-fg);border-radius:12px;padding:18px 18px 14px;font:13px/1.65 var(--mono);min-width:0;box-shadow:0 18px 40px -24px rgba(0,0,0,.45)}
+.log header{display:flex;justify-content:space-between;gap:8px;color:#7F95A1;font-size:11px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
+.log ol{list-style:none;margin:0;padding:0;height:216px;overflow:hidden}
+.log li{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.log .t{color:#6B7F8A}
+.log .tx{color:#FFA06B}
+.log .rx{color:#5BE0B3}
+.log .ok{color:#9CC2FF}
+.log footer{margin-top:10px;color:#6B7F8A;font-size:11px}
+
+/* sections */
+section{padding-block:56px;border-top:1px solid var(--rule)}
+.sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:32px}
+.sec-head h2{font-size:clamp(28px,3.6vw,40px);font-weight:700}
+.sec-head p{color:var(--muted);max-width:30em}
+
+/* services */
+.services{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:12px;overflow:hidden}
+.svc{background:var(--surface);padding:24px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.svc h3{font-size:19px;font-weight:700}
+.svc p{color:var(--muted);font-size:15px}
+.svc .proof{margin-top:auto;font:12px/1.5 var(--mono);color:var(--accent)}
+
+/* case studies */
+.case{display:grid;grid-template-columns:minmax(0,280px) minmax(0,1fr);gap:40px;padding-block:36px;border-top:1px dashed var(--rule)}
+.case:first-of-type{border-top:0;padding-top:0}
+.case aside{display:flex;flex-direction:column;gap:14px;min-width:0}
+.case .kind{font:12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--tx)}
+.case h3{font-size:30px;font-weight:800;line-height:1.08}
+.spec{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:13.5px;margin:0}
+.spec dt{color:var(--muted);font-family:var(--mono);font-size:12px;padding-top:2px}
+.spec dd{margin:0}
+.links{display:flex;flex-wrap:wrap;gap:8px}
+.links a{font:12.5px var(--mono);padding:4px 10px;border:1px solid var(--rule);border-radius:999px;text-decoration:none;color:var(--ink)}
+.links a:hover{border-color:var(--accent);color:var(--accent)}
+.story{display:grid;gap:18px;min-width:0}
+.story h4{font:600 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 4px}
+.story p{max-width:62ch}
+.story ul{margin:0;padding-left:18px;max-width:62ch}
+.story li+li{margin-top:4px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips span{font:12px var(--mono);background:var(--accent-soft);color:var(--accent);padding:3px 8px;border-radius:6px}
+
+/* architecture diagram */
+.diagram{overflow-x:auto;background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:14px}
+.diagram svg{display:block;min-width:620px;width:100%;height:auto}
+.diagram text{font-family:var(--mono);font-size:12px;fill:var(--ink)}
+.diagram .sub{fill:var(--muted);font-size:10.5px}
+.diagram .box{fill:var(--bg);stroke:var(--rule)}
+.diagram .hot{fill:var(--accent-soft);stroke:var(--accent)}
+.diagram .line{stroke:var(--muted);stroke-width:1.4;fill:none}
+.diagram .lbl{fill:var(--tx);font-size:10.5px}
+
+/* field note */
+.note{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:28px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px}
+.note h3{font-size:24px;font-weight:700;margin-bottom:10px}
+.note p{color:var(--muted)}
+.note p+p{margin-top:10px}
+pre.code{margin:0;background:var(--code-bg);color:var(--code-fg);border-radius:10px;padding:16px;font:13px/1.6 var(--mono);overflow-x:auto;min-width:0}
+pre.code .k{color:#9CC2FF} pre.code .n{color:#FFA06B} pre.code .c{color:#6B7F8A}
+
+/* process */
+.process{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;counter-reset:s}
+.process li{counter-increment:s;background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:16px;min-width:0}
+.process li::before{content:counter(s,decimal-leading-zero);display:block;font:500 12px var(--mono);color:var(--tx);margin-bottom:8px}
+.process b{display:block;font-family:var(--display);font-size:17px;margin-bottom:4px}
+.process span{font-size:14px;color:var(--muted)}
+
+/* stack */
+.stack{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.stack h3{font:600 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.stack p{font-size:15px}
+
+/* arabic */
+.ar{direction:rtl;text-align:right;font-family:var(--arabic);background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:28px;display:grid;gap:12px}
+.ar h2{font-family:var(--arabic);font-size:26px;font-weight:600}
+.ar p{max-width:60ch;color:var(--muted);line-height:1.9}
+.ar ul{margin:0;padding-right:20px;line-height:1.9}
+.ltr{direction:ltr;unicode-bidi:isolate}
+
+/* contact */
+.contact{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:40px;align-items:start}
+.contact h2{font-size:clamp(30px,4.4vw,48px);font-weight:800;line-height:1.05}
+.contact .lede{font-size:17px}
+.email{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:22px}
+.email code{font:500 17px var(--mono);user-select:all;background:var(--surface);border:1px solid var(--rule);padding:10px 14px;border-radius:8px;word-break:break-all}
+.contact ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.contact li a{display:flex;justify-content:space-between;gap:12px;padding:14px 16px;border:1px solid var(--rule);border-radius:10px;text-decoration:none;color:var(--ink);background:var(--surface)}
+.contact li a span:last-child{font-family:var(--mono);font-size:13px;color:var(--muted)}
+.contact li a:hover{border-color:var(--accent)}
+footer.end{padding-block:32px;color:var(--muted);font-size:13px;border-top:1px solid var(--rule)}
+
+@media (max-width:860px){
+  .hero,.contact,.note{grid-template-columns:minmax(0,1fr)}
+  .services,.stack{grid-template-columns:minmax(0,1fr)}
+  .case{grid-template-columns:minmax(0,1fr);gap:20px}
+  .process{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .hero{padding-block:16px 48px;gap:32px}
+}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <a class="mark" href="#top">Abdelrahman Wael</a>
+    <nav aria-label="Sections">
+      <a href="#services">Services</a>
+      <a href="#work">Work</a>
+      <a href="#process">Process</a>
+      <a href="#arabic">بالعربي</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <div class="hero" id="top">
+    <div>
+      <p class="eyebrow">Flutter engineer · Cairo, UTC+3 · Remote</p>
+      <h1>I own the mobile side of your product, <em>from architecture to the App Store.</em></h1>
+      <p class="lede">Five years shipping production Flutter apps for Android and iOS. When Flutter isn't enough, I go native: Swift, CoreBluetooth and platform channels. I also take on the problems most freelancers avoid, like crashes, broken push notifications, legacy code and hardware.</p>
+      <div class="facts">
+        <div><b>1.5M+</b><span>users on Jeel</span></div>
+        <div><b>25%+</b><span>fewer crashes, Crashlytics-led</span></div>
+        <div><b>5 yrs</b><span>production Flutter</span></div>
+        <div><b>140</b><span>pub points, open source</span></div>
+      </div>
+      <div class="cta">
+        <a class="btn primary" href="#contact">Start a project</a>
+        <a class="btn" href="#work">See case studies</a>
+      </div>
+    </div>
+
+    <figure class="log" aria-label="Illustrative BLE session log">
+      <header><span>ble · session log</span><span id="clock">00:00.000</span></header>
+      <ol id="log"></ol>
+      <footer>Illustrative example of the TX/RX logging I built for ConnectedRide. Not real vehicle data.</footer>
+    </figure>
+  </div>
+
+  <section id="services">
+    <div class="sec-head">
+      <h2>What clients hire me for</h2>
+      <p>I can work alone or embedded in your team, and I'm responsible for the result, not just the screens.</p>
+    </div>
+    <div class="services">
+      <div class="svc"><h3>Full app, idea to store</h3><p>MVPs and complete products: architecture, UI, API or Firebase backend, auth, payments, push, and release to App Store and Google Play.</p><p class="proof">Shoryan · Smart Winga · HR app</p></div>
+      <div class="svc"><h3>Rescue an existing app</h3><p>Crashes, slow screens, memory blow-ups, state bugs. I find the cause with Crashlytics and DevTools before I touch the code.</p><p class="proof">Crash rate −25%+ · Jeel</p></div>
+      <div class="svc"><h3>Native and hardware</h3><p>Bluetooth Low Energy, custom GATT protocols, Swift code bridged to Flutter, and simulators so you can test without the device in hand.</p><p class="proof">ConnectedRide · BMW</p></div>
+      <div class="svc"><h3>Push and store release</h3><p>APNs and FCM that work in all three app states, signing and CI/CD on Codemagic.</p><p class="proof">Codemagic → App Store + Play</p></div>
+      <div class="svc"><h3>Refactor and takeover</h3><p>Legacy Flutter code moved to Clean Architecture with BLoC or Cubit, covered by tests, so the next feature costs less.</p><p class="proof">Cross Workers · MD Labs</p></div>
+      <div class="svc"><h3>Long-term or part-time</h3><p>Ongoing feature work and maintenance for a product team that needs a dependable mobile engineer, not a new hire.</p><p class="proof">Async-first · weekly demos</p></div>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="sec-head">
+      <h2>Selected work</h2>
+      <p>Each case study covers the problem, what I built, and what I was responsible for.</p>
+    </div>
+
+    <article class="case">
+      <aside>
+        <p class="kind">Native iOS · BLE · Automotive</p>
+        <h3>ConnectedRide</h3>
+        <dl class="spec">
+          <dt>Client</dt><dd>BMW, internal engineering tool</dd>
+          <dt>Role</dt><dd>Built the native BLE stack and the Flutter bridge</dd>
+          <dt>Platform</dt><dd>iOS (Swift) + Flutter</dd>
+        </dl>
+        <div class="chips"><span>CoreBluetooth</span><span>GATT</span><span>LIN frames</span><span>Platform Channels</span><span>Swift</span></div>
+      </aside>
+      <div class="story">
+        <div><h4>Problem</h4><p>Engineers needed a phone app that talks to a vehicle over BMW's proprietary protocol: authenticated pairing, live telemetry, sending commands, and a full record of every frame in both directions. None of this exists as a Flutter package.</p></div>
+        <div><h4>What I built</h4>
+          <ul>
+            <li>A native iOS CoreBluetooth stack that encodes and decodes LIN frames carried over GATT, with multi-key authenticated pairing.</li>
+            <li>A bridge from that stack to Flutter over platform channels, streaming real-time telemetry and commands, with TX/RX logging on every frame.</li>
+            <li>A BLE peripheral simulator that sends malformed frames and failure paths, so the app can be tested without the physical hardware.</li>
+          </ul>
+        </div>
+        <div class="diagram" role="img" aria-label="Architecture: Flutter UI talks to a Swift BLE layer over platform channels; the Swift layer talks to the vehicle or a BLE simulator over GATT.">
+          <svg viewBox="0 0 720 170" xmlns="http://www.w3.org/2000/svg">
+            <rect class="box" x="10" y="45" width="170" height="80" rx="8"/>
+            <text x="28" y="78">Flutter app</text>
+            <text class="sub" x="28" y="98">telemetry · commands</text>
+            <text class="sub" x="28" y="112">TX/RX log view</text>
+            <rect class="hot" x="270" y="35" width="190" height="100" rx="8"/>
+            <text x="288" y="66">Swift BLE layer</text>
+            <text class="sub" x="288" y="86">CoreBluetooth</text>
+            <text class="sub" x="288" y="100">LIN encode / decode</text>
+            <text class="sub" x="288" y="114">authenticated pairing</text>
+            <rect class="box" x="550" y="12" width="160" height="58" rx="8"/>
+            <text x="566" y="38">Vehicle ECU</text>
+            <text class="sub" x="566" y="56">proprietary protocol</text>
+            <rect class="box" x="550" y="100" width="160" height="58" rx="8"/>
+            <text x="566" y="126">BLE simulator</text>
+            <text class="sub" x="566" y="144">malformed frames</text>
+            <path class="line" d="M180 85 H270"/>
+            <text class="lbl" x="186" y="76">platform</text>
+            <text class="lbl" x="186" y="102">channels</text>
+            <path class="line" d="M460 70 C505 70 505 41 550 41"/>
+            <path class="line" d="M460 100 C505 100 505 129 550 129"/>
+            <text class="lbl" x="482" y="88">GATT</text>
+          </svg>
+        </div>
+      </div>
+    </article>
+
+    <article class="case">
+      <aside>
+        <p class="kind">Education · Scale</p>
+        <h3>Jeel</h3>
+        <dl class="spec">
+          <dt>Users</dt><dd>1.5M+</dd>
+          <dt>Role</dt><dd>Flutter engineer at MD Labs: performance and stability</dd>
+          <dt>Platform</dt><dd>Android + iOS</dd>
+        </dl>
+        <div class="links">
+          <a href="https://apps.apple.com/us/app/jeel-%D8%AC%D9%8A%D9%84/id1489596085" target="_blank" rel="noopener">App Store</a>
+          <a href="https://play.google.com/store/apps/details?id=com.jeelapp.android" target="_blank" rel="noopener">Google Play</a>
+        </div>
+      </aside>
+      <div class="story">
+        <div><h4>Problem</h4><p>At 1.5M+ users, small issues are no longer small. A crash that hits 0.5% of sessions means thousands of people a day.</p></div>
+        <div><h4>What I did</h4>
+          <ul>
+            <li>Worked on performance and stability across Android and iOS, with Firebase and REST API integrations.</li>
+            <li>Used Crashlytics to rank crashes by impact, then fixed the root causes, many of them in state management. Across my MD Labs apps this cut crash rates by more than 25%.</li>
+            <li>Set up Codemagic CI/CD so builds, tests and store delivery run automatically.</li>
+          </ul>
+        </div>
+        <div class="chips"><span>BLoC / Cubit</span><span>Clean Architecture</span><span>Firebase</span><span>Crashlytics</span><span>Codemagic</span></div>
+      </div>
+    </article>
+
+    <article class="case">
+      <aside>
+        <p class="kind">Health · Scheduling</p>
+        <h3>Shoryan</h3>
+        <dl class="spec">
+          <dt>What</dt><dd>Blood donation platform</dd>
+          <dt>Platform</dt><dd>Android + iOS</dd>
+        </dl>
+        <div class="links">
+          <a href="https://apps.apple.com/sa/app/shoryan/id1508162596" target="_blank" rel="noopener">App Store</a>
+          <a href="https://play.google.com/store/apps/details?id=com.mobidevlabs.shorian_donor_mobile1" target="_blank" rel="noopener">Google Play</a>
+        </div>
+      </aside>
+      <div class="story">
+        <div><h4>What it does</h4><p>Matches blood donors with recipients who need them, and books donation appointments. The same core logic of availability, matching and booking sits behind most booking and marketplace apps.</p></div>
+        <div class="chips"><span>Matching</span><span>Appointments</span><span>Flutter</span></div>
+      </div>
+    </article>
+
+    <article class="case">
+      <aside>
+        <p class="kind">Open source · Developer tools</p>
+        <h3>api_track_inspector</h3>
+        <dl class="spec">
+          <dt>Score</dt><dd>140 pub points</dd>
+          <dt>Platforms</dt><dd>6</dd>
+          <dt>Clients</dt><dd>Dio, http, GetConnect</dd>
+        </dl>
+        <div class="links">
+          <a href="https://pub.dev/packages/api_track_inspector" target="_blank" rel="noopener">pub.dev</a>
+          <a href="https://github.com/abduwael/network_inspector" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </aside>
+      <div class="story">
+        <div><h4>Problem</h4><p>Whenever QA found a bug, the first question was always whether it came from the backend or the app. Answering it meant reproducing the call in Postman and digging through logs.</p></div>
+        <div><h4>What I built</h4><p>An in-app network inspector. Testers see every API call with its full URL, request and response, and can share the log with one tap. Bugs now reach the right person on the first try.</p></div>
+      </div>
+    </article>
+
+    <article class="case">
+      <aside>
+        <p class="kind">Enterprise · Internal tools</p>
+        <h3>HR app and Smart Winga</h3>
+        <dl class="spec">
+          <dt>Where</dt><dd>Cross Workers, MD Labs</dd>
+          <dt>Platform</dt><dd>Android + iOS</dd>
+        </dl>
+        <div class="links">
+          <a href="https://apps.apple.com/us/app/smart-winga/id6743442706" target="_blank" rel="noopener">Smart Winga · App Store</a>
+          <a href="https://play.google.com/store/apps/details?id=app.sumet.ambassador" target="_blank" rel="noopener">Google Play</a>
+        </div>
+      </aside>
+      <div class="story">
+        <div><h4>What I did</h4>
+          <ul>
+            <li>Built an internal HR app from scratch for attendance and leave requests, used by staff every day.</li>
+            <li>Refactored legacy Flutter modules to cut technical debt so new features shipped faster.</li>
+            <li>Built Smart Winga, a cross-platform Flutter app released on both stores.</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <section>
+    <div class="note">
+      <div>
+        <p class="eyebrow">Field note · performance</p>
+        <h3>A list of images that crashed the app on scroll</h3>
+        <p>Every pagination load made the app stutter, and then it crashed. Flutter Inspector showed it decoding 3048×3048 images to fill 120-pixel tiles, at full resolution, in memory.</p>
+        <p>The fix was to decode at display size. Memory dropped and the crash went away. I wrote it up on LinkedIn, where it got more than 23,000 impressions.</p>
+      </div>
+<pre class="code"><span class="c">// decode at the size it's shown, not the size it's stored</span>
+<span class="k">final</span> px = (<span class="n">120</span> * MediaQuery.of(context)
+    .devicePixelRatio).round();
+
+CachedNetworkImage(
+  imageUrl: url,
+  memCacheWidth: px,
+  memCacheHeight: px,
+);</pre>
+    </div>
+  </section>
+
+  <section id="process">
+    <div class="sec-head">
+      <h2>How a project runs</h2>
+      <p>You see working builds every week, not just a final handover.</p>
+    </div>
+    <ol class="process">
+      <li><b>Scope</b><span>Requirements, risks and a fixed plan with milestones.</span></li>
+      <li><b>Architect</b><span>Clean Architecture, state management, and data and API contracts.</span></li>
+      <li><b>Build</b><span>Feature by feature, with unit and widget tests on business logic.</span></li>
+      <li><b>Release</b><span>CI/CD, signing, store listing and review.</span></li>
+      <li><b>Maintain</b><span>Crash monitoring, updates and new features.</span></li>
+    </ol>
+  </section>
+
+  <section id="team">
+    <div class="sec-head">
+      <h2>Need more than a mobile engineer?</h2>
+      <p>For full projects I bring in a trusted team I've worked with. You still have one point of contact (me) and one plan.</p>
+    </div>
+    <div class="stack">
+      <div><h3>UI/UX design</h3><p>User flows, wireframes and Figma screens ready for development, before a line of code is written.</p></div>
+      <div><h3>Backend</h3><p>APIs, database and admin panel when Firebase isn't enough, built against the same API contract the app uses.</p></div>
+      <div><h3>QA testing</h3><p>Manual and regression testing on real Android and iOS devices before every release.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>Stack</h2></div>
+    <div class="stack">
+      <div><h3>Mobile</h3><p>Flutter, Dart, Swift, iOS, Android, BLoC/Cubit, GetX, Clean Architecture, unit and widget tests</p></div>
+      <div><h3>Backend and integrations</h3><p>Firebase (Auth, Firestore, Cloud Functions), REST APIs, Stripe, RevenueCat, Google Maps SDK, push notifications</p></div>
+      <div><h3>Delivery</h3><p>Codemagic, Bitbucket Pipelines, Git, Crashlytics, Jira, Figma. AI-assisted coding with Claude, Codex and Cursor, where I review all output and validate it with tests.</p></div>
+    </div>
+  </section>
+
+  <section id="arabic">
+    <div class="ar">
+      <h2>بالعربي</h2>
+      <p>مهندس Flutter بخبرة 5 سنوات في تطبيقات حقيقية على Android وiOS، منها تطبيق Jeel التعليمي الذي يستخدمه أكثر من 1.5 مليون مستخدم. أتولى الجانب المحمول من منتجك بالكامل، من تصميم البنية إلى النشر على المتاجر والمتابعة بعده.</p>
+      <ul>
+        <li>بناء تطبيق كامل أو MVP بـ <span class="ltr">Flutter</span> و<span class="ltr">Firebase</span> أو <span class="ltr">REST API</span></li>
+        <li>إصلاح الأعطال ومشاكل الأداء في تطبيقات قائمة</li>
+        <li>الإشعارات <span class="ltr">(APNs / FCM)</span> والنشر على App Store وGoogle Play</li>
+        <li>الربط مع أجهزة Bluetooth/BLE وكود iOS Native بلغة Swift</li>
+        <li>للمشاريع الكاملة: أوفر فريقًا موثوقًا عملت معه (مصمم UI/UX، مطور Backend، مختبر QA) مع بقائي نقطة التواصل الوحيدة</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="contact">
+      <div>
+        <h2>Tell me what you're building.</h2>
+        <p class="lede">Send the idea, the app you already have, or the bug that won't go away. I'll reply with questions and a plan.</p>
+        <div class="email">
+          <code id="addr">abduwael77@gmail.com</code>
+          <button class="btn" id="copy" type="button">Copy email</button>
+        </div>
+      </div>
+      <ul>
+        <li><a href="https://www.linkedin.com/in/abdelrahman-wael-15b727216" target="_blank" rel="noopener"><span>LinkedIn</span><span>abdelrahman-wael</span></a></li>
+        <li><a href="https://github.com/abduwael" target="_blank" rel="noopener"><span>GitHub</span><span>abduwael</span></a></li>
+        <li><a href="https://pub.dev/packages/api_track_inspector" target="_blank" rel="noopener"><span>pub.dev</span><span>api_track_inspector</span></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="end">Abdelrahman Wael · Flutter engineer · Cairo, Egypt · Arabic and English</footer>
+</div>
+
+<script>
+(function(){
+  var btn=document.getElementById('copy'), addr=document.getElementById('addr');
+  btn.addEventListener('click',function(){
+    var txt=addr.textContent;
+    function sel(){var r=document.createRange();r.selectNodeContents(addr);var s=getSelection();s.removeAllRanges();s.addRange(r);btn.textContent='Selected, press Ctrl+C';}
+    try{navigator.clipboard.writeText(txt).then(function(){btn.textContent='Copied';setTimeout(function(){btn.textContent='Copy email'},1800)},sel);}catch(e){sel();}
+  });
+
+  // Illustrative TX/RX log (not real protocol data)
+  var lines=[
+    ['ok','scan   peripheral found  rssi -58'],
+    ['ok','conn   connected · mtu 185'],
+    ['tx','TX  auth.challenge  key#1'],
+    ['rx','RX  auth.response   ok'],
+    ['tx','TX  auth.challenge  key#2'],
+    ['rx','RX  auth.response   ok · paired'],
+    ['tx','TX  frame 0x21  req telemetry'],
+    ['rx','RX  frame 0x22  speed 0 · batt 87%'],
+    ['tx','TX  frame 0x30  cmd lights:on'],
+    ['rx','RX  frame 0x31  ack'],
+    ['rx','RX  frame 0x22  speed 0 · batt 87%'],
+    ['tx','TX  frame 0x30  cmd lights:off'],
+    ['rx','RX  frame 0x31  ack'],
+    ['rx','RX  frame 0x7F  malformed · checksum ✗ → dropped']
+  ];
+  var ol=document.getElementById('log'), clock=document.getElementById('clock'), t=0, i=0, max=9;
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function fmt(ms){var s=Math.floor(ms/1000),m=Math.floor(s/60);return String(m).padStart(2,'0')+':'+String(s%60).padStart(2,'0')+'.'+String(ms%1000).padStart(3,'0');}
+  function add(){
+    var l=lines[i%lines.length]; t+=180+Math.floor(Math.random()*420);
+    var li=document.createElement('li');
+    li.innerHTML='<span class="t">'+fmt(t)+'</span>  <span class="'+l[0]+'">'+l[1]+'</span>';
+    ol.appendChild(li); while(ol.children.length>max) ol.removeChild(ol.firstChild);
+    clock.textContent=fmt(t); i++;
+  }
+  for(var k=0;k<max;k++) add();
+  if(!reduce) setInterval(add,1100);
+})();
+</script>
+
+</body>
+</html>
